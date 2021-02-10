@@ -4,6 +4,7 @@ import 'package:flutter_image_pick_crop/widgets/drawer.dart';
 import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
+import 'package:badges/badges.dart';
 
 class MyOrderSingleList extends StatefulWidget {
   static const String id = 'MyOrderSingleList';
@@ -96,15 +97,25 @@ class _MyOrderSingleListState extends State<MyOrderSingleList> {
                   margin: EdgeInsets.only(left: 345, top: 0),
                   child: Builder(
                     builder: (BuildContext context) {
-                      return IconButton(
-                        color: Colors.white,
-                        iconSize: 32,
-                        icon: Icon(
-                          Icons.shopping_cart,
+                      return Container(
+                        //margin: EdgeInsets.only(right: 32),
+                        child: Badge(
+                          position: BadgePosition.topEnd(top: 0, end: 0),
+                          badgeColor: Colors.black,
+                          badgeContent: Text(
+                            cartItems.length.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.shopping_cart,
+                              size: 25,
+                            ),
+                            onPressed: () {
+                              Scaffold.of(context).openEndDrawer();
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          Scaffold.of(context).openEndDrawer();
-                        },
                       );
                     },
                   ),

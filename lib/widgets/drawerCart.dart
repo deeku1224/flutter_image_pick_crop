@@ -56,10 +56,10 @@ class _DrawerCartState extends State<DrawerCart> {
                           },
                         ),
                         Container(
-                          height: size.height * 0.75,
+                          height: size.height * 0.74,
                           color: Colors.transparent,
                           child: ListView.builder(
-                              physics: ScrollPhysics(),
+                              physics: BouncingScrollPhysics(),
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemCount: cartItems.length,

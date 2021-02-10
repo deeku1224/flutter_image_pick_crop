@@ -48,7 +48,10 @@ List<Product> homeNonVeg = [
       50,
       'Carbohydrate',
       60,
-      Colors.red),
+      Colors.red,
+      true,
+      'Pazlam',
+      30),
   Product(
       2,
       65,
@@ -64,7 +67,10 @@ List<Product> homeNonVeg = [
       50,
       'Carbohydrate',
       60,
-      Colors.red),
+      Colors.red,
+      false,
+      'Pazlam',
+      30),
   Product(
       3,
       35,
@@ -80,5 +86,8 @@ List<Product> homeNonVeg = [
       50,
       'Carbohydrate',
       60,
-      Colors.red),
+      Colors.red,
+      false,
+      'Pazlam',
+      30),
 ];

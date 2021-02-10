@@ -28,7 +28,7 @@ class BlurredSmallContainer extends StatelessWidget {
             width: 176.5,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assests/images/Group 18.jpg'),
+                  image: AssetImage('assests/images/Group 21.png'),
                   fit: BoxFit.fill),
             ),
           ),

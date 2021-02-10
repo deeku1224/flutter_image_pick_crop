@@ -9,8 +9,8 @@ class ProductNameHome {
 }
 
 List<ProductNameHome> productNameHome = [
-  ProductNameHome('Flour', 'assests/images/Ellipse 1654.png'),
-  ProductNameHome('Milk', 'assests/images/Ellipse 1654.png'),
+  ProductNameHome('Flour', 'assests/images/tenor.gif'),
+  ProductNameHome('Milk', 'assests/images/tenor.gif'),
   ProductNameHome('Egg', 'assests/images/Ellipse 1654.png'),
   ProductNameHome('Dry Fruits', 'assests/images/Ellipse 1654.png'),
   ProductNameHome('Spinach', 'assests/images/Ellipse 1654.png'),

@@ -11,28 +11,28 @@ import 'package:flutter_image_pick_crop/widgets/searchResult.dart';
 
 class SinglesPage extends StatefulWidget {
   final product;
-
-  const SinglesPage({Key key, this.product}) : super(key: key);
+  final bool isFav;
+  const SinglesPage({
+    Key key,
+    this.product,
+    this.isFav,
+  }) : super(key: key);
   @override
-  _SinglesPageState createState() => _SinglesPageState(product);
+  _SinglesPageState createState() => _SinglesPageState(product, isFav);
 }
 
 class _SinglesPageState extends State<SinglesPage> {
   final product;
-  bool isFav = true;
-  _SinglesPageState(this.product);
+  bool isFav;
+  _SinglesPageState(this.product, this.isFav);
 
   @override
   Widget build(BuildContext context) {
+    // Navigator.pop(context, true);
     double sum = 0;
 
     final total = [
-      for (Product cartItem in cartItems)
-        {
-          setState(() {
-            sum = sum + cartItem.price;
-          })
-        }
+      for (Product cartItem in cartItems) {sum = sum + cartItem.price}
     ];
     Size size = MediaQuery.of(context).size;
     return SafeArea(
@@ -191,11 +191,16 @@ class _SinglesPageState extends State<SinglesPage> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           SinglesPage(
+                                                              isFav: searchResult[
+                                                                      index]
+                                                                  .isFavourite,
                                                               product:
                                                                   searchResult[
                                                                       index])));
                                             },
                                             resultIndex: searchResult[index],
+                                            isFav:
+                                                searchResult[index].isFavourite,
                                           ),
                                         ),
                                       ),
@@ -204,6 +209,8 @@ class _SinglesPageState extends State<SinglesPage> {
                                   onTap: () {
                                     setState(() {
                                       isFav = !isFav;
+                                      // product.isFavourite =
+                                      //     !product.isFavourite;
                                     });
                                   },
                                   child: Container(

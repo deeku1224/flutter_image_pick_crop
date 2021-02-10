@@ -51,7 +51,10 @@ List<Product> cartItems = [
       50,
       'Carbohydrate',
       60,
-      Colors.yellow),
+      Colors.yellow,
+      true,
+      'Pazlam',
+      30),
   Product(
       1,
       110,
@@ -67,7 +70,10 @@ List<Product> cartItems = [
       50,
       'Carbohydrate',
       60,
-      Colors.yellow),
+      Colors.yellow,
+      true,
+      'Pazlam',
+      30),
   Product(
       1,
       100,
@@ -83,5 +89,8 @@ List<Product> cartItems = [
       50,
       'Carbohydrate',
       60,
-      Colors.yellow),
+      Colors.yellow,
+      false,
+      'Pazlam',
+      30),
 ];

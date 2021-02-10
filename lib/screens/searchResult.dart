@@ -19,12 +19,7 @@ class _SearchResultState extends State<SearchResult> {
     double sum = 0;
 
     final total = [
-      for (Product cartItem in cartItems)
-        {
-          setState(() {
-            sum = sum + cartItem.price;
-          })
-        }
+      for (Product cartItem in cartItems) {sum = sum + cartItem.price}
     ];
     Size size = MediaQuery.of(context).size;
     return SafeArea(
@@ -35,24 +30,25 @@ class _SearchResultState extends State<SearchResult> {
         endDrawer: DrawerCart(size: size, sum: sum),
         body: Stack(
           children: [
-            ListView(
+            Column(
+              //physics: NeverScrollableScrollPhysics(),
               children: [
-                SizedBox(
-                  height: 150,
-                ),
                 Container(
-                  margin: EdgeInsets.only(),
+                  margin: EdgeInsets.only(
+                    top: 130,
+                  ),
                   padding: EdgeInsets.only(
-                    top: 0,
                     left: 15,
                     right: 15,
                   ),
-                  height: 680,
+                  height: 640,
                   // height: searchResult.length<6?size.height:size.height+(100*()),
 
                   width: size.width,
+
                   child: GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: BouncingScrollPhysics(),
+                    //physics: NeverScrollableScrollPhysics(),
                     itemCount: searchResult.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         childAspectRatio: 0.9,
@@ -64,10 +60,12 @@ class _SearchResultState extends State<SearchResult> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    SinglesPage(product: searchResult[index])));
+                                builder: (context) => SinglesPage(
+                                    isFav: searchResult[index].isFavourite,
+                                    product: searchResult[index])));
                       },
                       resultIndex: searchResult[index],
+                      isFav: searchResult[index].isFavourite,
                     ),
                   ),
                 ),

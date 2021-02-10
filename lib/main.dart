@@ -22,6 +22,7 @@ import 'package:flutter_image_pick_crop/screens/notification.dart';
 import 'package:flutter_image_pick_crop/screens/privacyPolicy.dart';
 import 'package:flutter_image_pick_crop/screens/termsAndConditions.dart';
 import 'package:flutter_image_pick_crop/screens/orderSuccess.dart';
+import 'package:flutter_image_pick_crop/screens/splashScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,9 +36,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Nuni',
-        theme: ThemeData(),
-        initialRoute: RegisterLogin.id,
+        theme: ThemeData(
+          accentColor: Colors.transparent,
+          accentColorBrightness: Brightness.light,
+        ),
+        initialRoute: HomePage.id,
         routes: {
+          Splash.id: (context) => Splash(),
+          // assests\images\tenor.gif
           RegisterLogin.id: (context) => RegisterLogin(),
           RegisterPhoneUnfilled.id: (context) => RegisterPhoneUnfilled(),
           Otp.id: (context) => Otp(),

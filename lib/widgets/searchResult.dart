@@ -5,19 +5,22 @@ class SearchResultContainers extends StatefulWidget {
     Key key,
     this.resultIndex,
     this.onpress,
+    this.isFav,
   }) : super(key: key);
   final resultIndex;
   final Function onpress;
+  final bool isFav;
   @override
   _SearchResultContainersState createState() =>
-      _SearchResultContainersState(resultIndex, onpress);
+      _SearchResultContainersState(resultIndex, onpress, isFav);
 }
 
 class _SearchResultContainersState extends State<SearchResultContainers> {
   final resultIndex;
   final Function onpress;
-  _SearchResultContainersState(this.resultIndex, this.onpress);
-  bool isFavourite = false;
+  bool isFav;
+
+  _SearchResultContainersState(this.resultIndex, this.onpress, this.isFav);
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +136,7 @@ class _SearchResultContainersState extends State<SearchResultContainers> {
         GestureDetector(
           onTap: () {
             setState(() {
-              isFavourite = !isFavourite;
+              isFav = !isFav;
             });
           },
           child: Container(
@@ -148,7 +151,7 @@ class _SearchResultContainersState extends State<SearchResultContainers> {
             child: Icon(
               Icons.favorite,
               size: 35,
-              color: isFavourite ? Color(0xffFF0E0E) : Color(0xffC7C7C7),
+              color: isFav ? Color(0xffFF0E0E) : Color(0xffC7C7C7),
             ),
           ),
         ),
