@@ -29,6 +29,8 @@ dependencies:
   splashscreen: ^1.3.5
   badges: ^1.1.6
   provider: ^4.3.3
+  url_launcher: ^5.7.10
+  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -50,7 +52,7 @@ flutter:
   uses-material-design: true
   assets:
     - assests/images/
-    
+    - assests/icons/
   fonts:
     - family: Poppins
       fonts:

@@ -34,6 +34,89 @@ import 'package:flutter_image_pick_crop/modals/Product.dart';
 //     this.bgColor,
 //   );
 // }
+class MyCart extends ChangeNotifier {
+  List<Product> cartItems = [
+    Product(
+        1,
+        120,
+        'Mango',
+        'assests/images/[removal 7.png',
+        (1 / 2),
+        1,
+        4,
+        'Lorem \n ipsum \n dolor ',
+        'Nutrients',
+        85,
+        'Vitamin',
+        50,
+        'Carbohydrate',
+        60,
+        Colors.yellow,
+        true,
+        'Pazlam',
+        30),
+    Product(
+        1,
+        110,
+        'Papaya',
+        'assests/images/[removal 7.png',
+        (1 / 2),
+        1,
+        4,
+        'Lorem \n ipsum \n dolor ',
+        'Nutrients',
+        85,
+        'Vitamin',
+        50,
+        'Carbohydrate',
+        60,
+        Colors.yellow,
+        true,
+        'Pazlam',
+        30),
+    Product(
+        1,
+        100,
+        'Orange',
+        'assests/images/[removal 7.png',
+        (1 / 2),
+        1,
+        4,
+        'Lorem \n ipsum \n dolor ',
+        'Nutrients',
+        85,
+        'Vitamin',
+        50,
+        'Carbohydrate',
+        60,
+        Colors.yellow,
+        false,
+        'Pazlam',
+        30),
+  ];
+  addToCart(product) {
+    cartItems.add(product);
+    notifyListeners();
+  }
+
+  removeAt(index) {
+    cartItems.removeAt(index);
+    notifyListeners();
+  }
+
+  total(sum) {
+    cartItems.forEach((item) {
+      sum = sum + item.price;
+      notifyListeners();
+      return sum;
+    });
+  }
+
+  length() {
+    notifyListeners();
+    return cartItems.length;
+  }
+}
 
 List<Product> cartItems = [
   Product(

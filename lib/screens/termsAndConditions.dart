@@ -1,8 +1,13 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_pick_crop/widgets/drawer.dart';
-import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
+import 'package:flutter_image_pick_crop/widgets/drawer.dart';
+import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
+import 'package:flutter_image_pick_crop/widgets/searchAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/notificationAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/cartAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/profileAligned.dart';
 
 class TermsAndCondition extends StatelessWidget {
   static const String id = 'TermsAndCondition';
@@ -18,11 +23,13 @@ class TermsAndCondition extends StatelessWidget {
         child: Scaffold(
       backgroundColor: Colors.white,
       drawerScrimColor: Colors.transparent,
-      drawer: DrawerStart(),
+      drawer: DrawerStart(
+        currentPage: 7,
+      ),
       endDrawer: DrawerCart(size: size, sum: sum),
       body: Stack(children: [
         Positioned(
-          top: 115,
+          top: 95,
           left: 60,
           child: Text(
             'Terms And Condition',
@@ -34,7 +41,7 @@ class TermsAndCondition extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 170),
+          margin: EdgeInsets.only(top: 150),
           padding: EdgeInsets.symmetric(horizontal: 28),
           height: 585,
           width: 600,
@@ -68,59 +75,13 @@ class TermsAndCondition extends StatelessWidget {
           ),
         ),
         //drawer opener person icon
-        Container(
-          margin: EdgeInsets.only(left: 10, top: 0),
-          child: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                color: Colors.white,
-                iconSize: 32,
-                icon: Icon(
-                  Icons.person,
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            },
-          ),
-        ),
+        ProfileAligned(),
+        //Searchicon
+        SearchAligned(),
         //Notification icon
-        Container(
-          margin: EdgeInsets.only(left: 290, top: 0),
-          child: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                color: Colors.white,
-                iconSize: 32,
-                icon: Icon(
-                  Icons.notifications_active,
-                ),
-                onPressed: () {
-                  //Navigate to Notification Page
-                },
-              );
-            },
-          ),
-        ),
+        NotificationAligned(),
         //Shopping Cart
-        Container(
-          margin: EdgeInsets.only(left: 345, top: 0),
-          child: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                color: Colors.white,
-                iconSize: 32,
-                icon: Icon(
-                  Icons.shopping_cart,
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-              );
-            },
-          ),
-        ),
+        CartAligned(),
       ]),
     ));
   }

@@ -1,13 +1,19 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
-import 'package:flutter_image_pick_crop/widgets/drawer.dart';
-import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
-import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 import 'package:flutter_image_pick_crop/modals/searchResult.dart';
 import 'package:flutter_image_pick_crop/modals/offerProduct.dart';
 import 'package:flutter_image_pick_crop/widgets/nutrientBar.dart';
 import 'package:flutter_image_pick_crop/widgets/searchResult.dart';
+import 'package:flutter_image_pick_crop/widgets/drawer.dart';
+import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
+import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
+import 'package:flutter_image_pick_crop/widgets/searchAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/notificationAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/cartAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/profileAligned.dart';
 
 class SinglesPage extends StatefulWidget {
   final product;
@@ -150,18 +156,34 @@ class _SinglesPageState extends State<SinglesPage> {
                                               Positioned(
                                                   top: 390,
                                                   left: 200,
-                                                  child: LoginButtonTextSize(
-                                                    size: size,
-                                                    text: 'Add to Cart',
-                                                    textcolour: Colors.white,
-                                                    containercolour:
-                                                        Colors.black,
-                                                    buttonHoriz: 35,
-                                                    buttonVertical: 14,
-                                                    press: () {
-                                                      //Add to Cart
-                                                    },
-                                                    fontSize: 18,
+                                                  child: Consumer<MyCart>(
+                                                    builder: (context, myCart,
+                                                            child) =>
+                                                        LoginButtonTextSize(
+                                                      size: size,
+                                                      text: 'Add to Cart',
+                                                      textcolour: Colors.white,
+                                                      containercolour:
+                                                          Colors.black,
+                                                      buttonHoriz: 35,
+                                                      buttonVertical: 14,
+                                                      press: () {
+                                                        myCart
+                                                            .addToCart(product);
+
+                                                        setState(() {
+                                                          cartItems
+                                                              .add(product);
+                                                          cartItems
+                                                              .forEach((item) {
+                                                            sum = 0;
+                                                            sum = sum +
+                                                                item.price;
+                                                          });
+                                                        });
+                                                      },
+                                                      fontSize: 18,
+                                                    ),
                                                   )),
                                             ],
                                           )),
@@ -216,15 +238,19 @@ class _SinglesPageState extends State<SinglesPage> {
                                   child: Container(
                                     margin: EdgeInsets.only(top: 0, left: 50),
                                     padding: EdgeInsets.only(top: 4, left: 0),
-                                    height: 65,
-                                    width: 65,
+                                    height: 55,
+                                    width: 55,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle,
-                                    ),
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        boxShadow: <BoxShadow>[
+                                          BoxShadow(
+                                              color: Colors.grey[400],
+                                              offset: Offset(0, 1))
+                                        ]),
                                     child: Icon(
                                       Icons.favorite,
-                                      size: 45,
+                                      size: 37,
                                       color: isFav
                                           ? Color(0xffFF0E0E)
                                           : Color(0xffC7C7C7),
@@ -285,59 +311,13 @@ class _SinglesPageState extends State<SinglesPage> {
                       ),
                     ),
                     //drawer opener person icon
-                    Container(
-                      margin: EdgeInsets.only(left: 10, top: 0),
-                      child: Builder(
-                        builder: (BuildContext context) {
-                          return IconButton(
-                            color: Colors.white,
-                            iconSize: 32,
-                            icon: Icon(
-                              Icons.person,
-                            ),
-                            onPressed: () {
-                              Scaffold.of(context).openDrawer();
-                            },
-                          );
-                        },
-                      ),
-                    ),
+                    ProfileAligned(),
+                    //Search
+                    SearchAligned(),
                     //Notification icon
-                    Container(
-                      margin: EdgeInsets.only(left: 290, top: 0),
-                      child: Builder(
-                        builder: (BuildContext context) {
-                          return IconButton(
-                            color: Colors.white,
-                            iconSize: 32,
-                            icon: Icon(
-                              Icons.notifications_active,
-                            ),
-                            onPressed: () {
-                              //Navigate to Notification Page
-                            },
-                          );
-                        },
-                      ),
-                    ),
+                    NotificationAligned(),
                     //Shopping Cart
-                    Container(
-                      margin: EdgeInsets.only(left: 345, top: 0),
-                      child: Builder(
-                        builder: (BuildContext context) {
-                          return IconButton(
-                            color: Colors.white,
-                            iconSize: 32,
-                            icon: Icon(
-                              Icons.shopping_cart,
-                            ),
-                            onPressed: () {
-                              Scaffold.of(context).openEndDrawer();
-                            },
-                          );
-                        },
-                      ),
-                    ),
+                    CartAligned(),
                   ]),
                 ]))));
   }

@@ -6,11 +6,14 @@ class DrawerListTile extends StatelessWidget {
     this.icon,
     this.text,
     this.onPress,
+    this.fontWeight,
+    this.fontSize,
   }) : super(key: key);
-  final Icon icon;
+  final Widget icon;
   final String text;
   final Function onPress;
-
+  final FontWeight fontWeight;
+  final double fontSize;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -23,8 +26,8 @@ class DrawerListTile extends StatelessWidget {
         style: TextStyle(
             color: Color(0xff3D3D3D),
             fontFamily: 'Inter',
-            fontSize: 19,
-            fontWeight: FontWeight.w200),
+            fontSize: fontSize,
+            fontWeight: fontWeight),
       ),
     );
   }

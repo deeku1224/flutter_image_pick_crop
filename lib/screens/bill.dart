@@ -1,31 +1,23 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
-import 'dart:ui';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
+import 'package:flutter_image_pick_crop/screens/paymentMethod.dart';
 import 'package:flutter_image_pick_crop/widgets/drawer.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
-import 'package:flutter_image_pick_crop/modals/user.dart';
-import 'package:flutter_image_pick_crop/screens/myAccount.dart';
-import 'package:flutter_image_pick_crop/screens/paymentMethod.dart';
+import 'package:flutter_image_pick_crop/widgets/profile2Aligned.dart';
+import 'package:flutter_image_pick_crop/widgets/nuniTextAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/accountAligned.dart';
 
-class Bill extends StatefulWidget {
+class Bill extends StatelessWidget {
   static const String id = 'Bill';
-  @override
-  _BillState createState() => _BillState();
-}
 
-class _BillState extends State<Bill> {
   @override
   Widget build(BuildContext context) {
     double sum = 0;
 
     final total = [
-      for (Product cartItem in cartItems)
-        {
-          setState(() {
-            sum = sum + cartItem.price;
-          })
-        }
+      for (Product cartItem in cartItems) {sum = sum + cartItem.price}
     ];
     Size size = MediaQuery.of(context).size;
     return Container(
@@ -49,45 +41,9 @@ class _BillState extends State<Bill> {
             width: size.width,
             child: Stack(
               children: [
-                Positioned(
-                  child: Builder(builder: (BuildContext context) {
-                    return IconButton(
-                      icon: Icon(
-                        Icons.line_style,
-                        size: 28,
-                      ),
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    );
-                  }),
-                ),
-                Positioned(
-                  top: 0,
-                  left: 110,
-                  child: Text(
-                    'Nuni',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'SairaStencilOne',
-                        fontWeight: FontWeight.normal,
-                        fontSize: 64,
-                        letterSpacing: 8),
-                  ),
-                ),
-                Positioned(
-                  top: 8,
-                  left: 335,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, MyAccount.id);
-                    },
-                    child: CircleAvatar(
-                      radius: 32,
-                      backgroundImage: AssetImage(user[0].image),
-                    ),
-                  ),
-                ),
+                Profile2Aligned(),
+                NuniTextAligned(),
+                AccountAligned(),
                 Container(
                   margin: EdgeInsets.only(top: 115),
                   height: size.height,
@@ -225,6 +181,7 @@ class _BillState extends State<Bill> {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
+
                       //Delivery
                       Positioned(
                         top: 375,

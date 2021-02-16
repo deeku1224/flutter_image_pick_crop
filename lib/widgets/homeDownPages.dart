@@ -156,13 +156,13 @@ class _HomeDownPagesState extends State<HomeDownPages> {
                           buttonHoriz: 40,
                           buttonVertical: 15,
                           press: () {
-                            setState(() {
-                              cartItems.add(product[index]);
-                              cartItems.forEach((item) {
-                                sum = 0;
-                                sum = sum + item.price;
-                              });
-                            }); //take id and send
+                            // setState(() {
+                            //   cartItems.add(product[index]);
+                            //   cartItems.forEach((item) {
+                            //     sum = 0;
+                            //     sum = sum + item.price;
+                            //   });
+                            // }); //take id and send
                           },
                           fontSize: 18,
                         ),

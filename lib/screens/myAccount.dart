@@ -1,16 +1,19 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
-import 'package:flutter_image_pick_crop/widgets/drawer.dart';
-import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
-import 'package:flutter_image_pick_crop/modals/address.dart';
 import 'package:flutter_image_pick_crop/modals/user.dart';
 import 'package:flutter_image_pick_crop/screens/addAdress.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_image_pick_crop/widgets/drawer.dart';
+import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
+import 'package:flutter_image_pick_crop/widgets/notificationIcon.dart';
+import 'package:flutter_image_pick_crop/widgets/cartIcon.dart';
+import 'package:flutter_image_pick_crop/widgets/leadingIcon.dart';
+import 'package:flutter_image_pick_crop/widgets/addressListView.dart';
 
 //import 'package:path/path.dart';
 class MyAccount extends StatefulWidget {
@@ -23,6 +26,12 @@ class _MyAccountState extends State<MyAccount> {
   File _pickedImage;
 
   int selectedIndex = 0;
+  void indexProvider(index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Future uploadPic(BuildContext context) async {
@@ -40,12 +49,7 @@ class _MyAccountState extends State<MyAccount> {
     double sum = 0;
     // ignore: unused_local_variable
     final total = [
-      for (Product cartItem in cartItems)
-        {
-          setState(() {
-            sum = sum + cartItem.price;
-          })
-        }
+      for (Product cartItem in cartItems) {sum = sum + cartItem.price}
     ];
     Size size = MediaQuery.of(context).size;
 
@@ -62,55 +66,17 @@ class _MyAccountState extends State<MyAccount> {
           child: Scaffold(
         backgroundColor: Colors.transparent,
         drawerScrimColor: Colors.transparent,
-        drawer: DrawerStart(),
+        drawer: DrawerStart(
+          currentPage: 3,
+        ),
         endDrawer: DrawerCart(size: size, sum: sum),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-          leading: Builder(builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(
-                Icons.person,
-                size: 28,
-              ),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          }),
+          leading: LeadingIcon(),
           actions: <Widget>[
-            Builder(
-              builder: (BuildContext context) {
-                return Container(
-                  margin: EdgeInsets.only(right: 15),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.notifications_active,
-                      size: 28,
-                    ),
-                    onPressed: () {
-                      // Navigatige to notification page
-                    },
-                  ),
-                );
-              },
-            ),
-            Builder(
-              builder: (BuildContext context) {
-                return Container(
-                  margin: EdgeInsets.only(right: 15),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.shopping_cart,
-                      size: 28,
-                    ),
-                    onPressed: () {
-                      Scaffold.of(context).openEndDrawer();
-                    },
-                  ),
-                );
-              },
-            ),
+            NotificationIcon(),
+            CartIcon(),
           ],
         ),
         body: Stack(
@@ -208,11 +174,11 @@ class _MyAccountState extends State<MyAccount> {
               width: 440,
               child: Padding(
                 padding: EdgeInsets.only(top: 40),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: address.length,
-                  itemBuilder: (context, index) => buildGestureDetector(index),
+                child: AddressListView(
+                  selectedIndex: selectedIndex,
+                  onPress: (index) {
+                    indexProvider(index);
+                  },
                 ),
               ),
             ),
@@ -332,62 +298,6 @@ class _MyAccountState extends State<MyAccount> {
                 onTap: () {
                   _loadPicker(ImageSource.gallery);
                 },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildGestureDetector(int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedIndex = index;
-        });
-      },
-      child: Padding(
-        padding: EdgeInsets.only(top: 20, left: 30, right: 30),
-        child: Container(
-          height: 170,
-          decoration: BoxDecoration(
-            color:
-                selectedIndex == index ? Color(0xffFF5454) : Color(0xffF0F0F0),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 70,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    '${address[index].title}',
-                    style: TextStyle(
-                        color: selectedIndex == index
-                            ? Colors.white
-                            : Colors.black,
-                        fontFamily: 'Inter',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '${address[index].door},${address[index].street},\n${address[index].area},\n${address[index].district},${address[index].state}',
-                    style: TextStyle(
-                        color: selectedIndex == index
-                            ? Colors.white
-                            : Colors.black,
-                        fontFamily: 'Inter',
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal),
-                  )
-                ],
               ),
             ],
           ),

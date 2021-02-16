@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_pick_crop/modals/cart.dart';
 import 'package:flutter_image_pick_crop/screens/cancelation.dart';
 import 'package:flutter_image_pick_crop/screens/registerOtp.dart';
 import 'package:flutter_image_pick_crop/screens/registerPhoneUnfilled.dart';
@@ -23,6 +24,9 @@ import 'package:flutter_image_pick_crop/screens/privacyPolicy.dart';
 import 'package:flutter_image_pick_crop/screens/termsAndConditions.dart';
 import 'package:flutter_image_pick_crop/screens/orderSuccess.dart';
 import 'package:flutter_image_pick_crop/screens/splashScreen.dart';
+import 'package:flutter_image_pick_crop/screens/customerService.dart';
+
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,40 +37,45 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Nuni',
-        theme: ThemeData(
-          accentColor: Colors.transparent,
-          accentColorBrightness: Brightness.light,
-        ),
-        initialRoute: HomePage.id,
-        routes: {
-          Splash.id: (context) => Splash(),
-          // assests\images\tenor.gif
-          RegisterLogin.id: (context) => RegisterLogin(),
-          RegisterPhoneUnfilled.id: (context) => RegisterPhoneUnfilled(),
-          Otp.id: (context) => Otp(),
-          RegisterName.id: (context) => RegisterName(),
-          RegisterPassword.id: (context) => RegisterPassword(),
-          Login.id: (context) => Login(),
-          AddAdress.id: (context) => AddAdress(),
-          AddressSelector.id: (context) => AddressSelector(),
-          Cancelation.id: (context) => Cancelation(),
-          HomePage.id: (context) => HomePage(),
-          MyAccount.id: (context) => MyAccount(),
-          HistoryPage.id: (context) => HistoryPage(),
-          PaymentMethod.id: (context) => PaymentMethod(),
-          Bill.id: (context) => Bill(),
-          CheckOut.id: (context) => CheckOut(),
-          HistorySinglePage.id: (context) => HistorySinglePage(),
-          MyOrderSingleList.id: (context) => MyOrderSingleList(),
-          //needs some changes
-          SearchResult.id: (context) => SearchResult(),
-          Notifications.id: (context) => Notifications(),
-          PrivacyPolicy.id: (context) => PrivacyPolicy(),
-          TermsAndCondition.id: (context) => TermsAndCondition(),
-          OrderSuccess.id: (context) => OrderSuccess(),
-        });
+    return ChangeNotifierProvider<MyCart>(
+      create: (_) => MyCart(),
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Nuni',
+          theme: ThemeData(
+            accentColor: Colors.transparent,
+            accentColorBrightness: Brightness.light,
+          ),
+          initialRoute: HomePage.id,
+          routes: {
+            Splash.id: (context) => Splash(),
+            // assests\images\tenor.gif
+            RegisterLogin.id: (context) => RegisterLogin(),
+            RegisterPhoneUnfilled.id: (context) => RegisterPhoneUnfilled(),
+            Otp.id: (context) => Otp(),
+            RegisterName.id: (context) => RegisterName(),
+            RegisterPassword.id: (context) => RegisterPassword(),
+            Login.id: (context) => Login(),
+
+            AddAdress.id: (context) => AddAdress(),
+            AddressSelector.id: (context) => AddressSelector(),
+            Cancelation.id: (context) => Cancelation(),
+            HomePage.id: (context) => HomePage(),
+            MyAccount.id: (context) => MyAccount(),
+            HistoryPage.id: (context) => HistoryPage(),
+            PaymentMethod.id: (context) => PaymentMethod(),
+            Bill.id: (context) => Bill(),
+            CheckOut.id: (context) => CheckOut(),
+            HistorySinglePage.id: (context) => HistorySinglePage(),
+            MyOrderSingleList.id: (context) => MyOrderSingleList(),
+            //needs some changes
+            SearchResult.id: (context) => SearchResult(),
+            Notifications.id: (context) => Notifications(),
+            PrivacyPolicy.id: (context) => PrivacyPolicy(),
+            TermsAndCondition.id: (context) => TermsAndCondition(),
+            OrderSuccess.id: (context) => OrderSuccess(),
+            CustomerService.id: (context) => CustomerService(),
+          }),
+    );
   }
 }

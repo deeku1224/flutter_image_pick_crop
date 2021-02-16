@@ -1,28 +1,25 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
+import 'package:flutter_image_pick_crop/modals/cart.dart';
+import 'package:flutter_image_pick_crop/widgets/searchAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/notificationAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/cartAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/profileAligned.dart';
 import 'package:flutter_image_pick_crop/widgets/drawer.dart';
 import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
-import 'package:flutter_image_pick_crop/modals/cart.dart';
 
-class HistorySinglePage extends StatefulWidget {
+class HistorySinglePage extends StatelessWidget {
   static const String id = 'HistorySinglePage';
-  @override
-  _HistorySinglePageState createState() => _HistorySinglePageState();
-}
 
-class _HistorySinglePageState extends State<HistorySinglePage> {
   @override
   Widget build(BuildContext context) {
     double sum = 0;
 
     final total = [
-      for (Product cartItem in cartItems)
-        {
-          setState(() {
-            sum = sum + cartItem.price;
-          })
-        }
+      for (Product cartItem in cartItems) {sum = sum + cartItem.price}
     ];
     Size size = MediaQuery.of(context).size;
     return SafeArea(
@@ -40,7 +37,7 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
           child: Stack(
             children: [
               Container(
-                height: 75,
+                height: 70,
                 width: size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -58,61 +55,15 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                 ),
               ),
               //drawer opener person icon
-              Container(
-                margin: EdgeInsets.only(left: 10, top: 0),
-                child: Builder(
-                  builder: (BuildContext context) {
-                    return IconButton(
-                      color: Colors.white,
-                      iconSize: 32,
-                      icon: Icon(
-                        Icons.person,
-                      ),
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    );
-                  },
-                ),
-              ),
+              ProfileAligned(),
+              //searchIcon
+              SearchAligned(),
               //Notification icon
-              Container(
-                margin: EdgeInsets.only(left: 290, top: 0),
-                child: Builder(
-                  builder: (BuildContext context) {
-                    return IconButton(
-                      color: Colors.white,
-                      iconSize: 32,
-                      icon: Icon(
-                        Icons.notifications_active,
-                      ),
-                      onPressed: () {
-                        //Navigate to Notification Page
-                      },
-                    );
-                  },
-                ),
-              ),
+              NotificationAligned(),
               //Shopping Cart
-              Container(
-                margin: EdgeInsets.only(left: 345, top: 0),
-                child: Builder(
-                  builder: (BuildContext context) {
-                    return IconButton(
-                      color: Colors.white,
-                      iconSize: 32,
-                      icon: Icon(
-                        Icons.shopping_cart,
-                      ),
-                      onPressed: () {
-                        Scaffold.of(context).openEndDrawer();
-                      },
-                    );
-                  },
-                ),
-              ),
+              CartAligned(),
               Positioned(
-                top: 125,
+                top: 105,
                 left: 30,
                 child: Text(
                   'Order Info',
@@ -124,7 +75,7 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 175, left: 30),
+                margin: EdgeInsets.only(top: 155, left: 30),
                 height: 99,
                 width: 360,
                 decoration: BoxDecoration(
@@ -182,7 +133,7 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                 ),
               ),
               Positioned(
-                top: 300,
+                top: 280,
                 left: 30,
                 child: Text(
                   'Delivery',
@@ -195,7 +146,7 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
               ),
               //???need to change date
               Positioned(
-                top: 325,
+                top: 305,
                 left: 32,
                 child: Text(
                   'Delivered on 24/7/2020 ',
@@ -207,7 +158,7 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 347, left: 50),
+                margin: EdgeInsets.only(top: 327, left: 50),
                 width: 330,
                 height: 65,
                 decoration: BoxDecoration(
@@ -216,7 +167,7 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                         image: AssetImage('assests/images/Group 39.png'))),
               ),
               Container(
-                margin: EdgeInsets.only(top: 420),
+                margin: EdgeInsets.only(top: 400),
                 height: 352,
                 width: size.width,
                 decoration: BoxDecoration(
@@ -224,109 +175,114 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
                 )),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: cartItems.length,
-                  itemBuilder: (context, index) => Padding(
-                      padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 10, bottom: 10),
-                            child: Container(
-                              height: 100,
-                              width: 380,
-                              decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color:
-                                          Colors.grey.shade400.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 12,
+                child: Consumer<MyCart>(
+                  builder: (context, myCart, child) => ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: myCart.length(),
+                    itemBuilder: (context, index) => Padding(
+                        padding:
+                            EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                        child: Stack(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 10, bottom: 10),
+                              child: Container(
+                                height: 100,
+                                width: 380,
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.shade400
+                                            .withOpacity(0.5),
+                                        spreadRadius: 1,
+                                        blurRadius: 12,
 
-                                      offset: Offset(
-                                          5, 5), // changes position of shadow
-                                    ),
-                                  ],
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 10),
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.contain,
-                                image: AssetImage(cartItems[index].image),
+                                        offset: Offset(
+                                            5, 5), // changes position of shadow
+                                      ),
+                                    ],
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10)),
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top: 20,
-                            left: 140,
-                            child: Text(
-                              '${cartItems[index].name}',
-                              style: TextStyle(
-                                color: Color(0xff4D4D4D),
-                                fontFamily: 'OpenSans',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.contain,
+                                  image:
+                                      AssetImage(myCart.cartItems[index].image),
+                                ),
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top: 5,
-                            left: 280,
-                            child: LoginButtonTextSize(
-                              size: size,
-                              text: 'View Details',
-                              textcolour: Color(0xff929292),
-                              containercolour: Color(0xffF0F0F0),
-                              buttonHoriz: 10,
-                              buttonVertical: 7,
-                              press: () {
-                                //Navigate to view details
-                              },
-                              fontSize: 12,
+                            Positioned(
+                              top: 20,
+                              left: 140,
+                              child: Text(
+                                '${myCart.cartItems[index].name}',
+                                style: TextStyle(
+                                  color: Color(0xff4D4D4D),
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                             ),
-                          ),
-                          Positioned(
-                            top: 3,
-                            left: 280,
-                            child: LoginButtonTextSize(
-                              size: size,
-                              text: 'View Details',
-                              textcolour: Color(0xff929292),
-                              containercolour: Color(0xffF0F0F0),
-                              buttonHoriz: 10,
-                              buttonVertical: 7,
-                              press: () {
-                                //Navigate to view details
-                              },
-                              fontSize: 12,
+                            Positioned(
+                              top: 5,
+                              left: 280,
+                              child: LoginButtonTextSize(
+                                size: size,
+                                text: 'View Details',
+                                textcolour: Color(0xff929292),
+                                containercolour: Color(0xffF0F0F0),
+                                buttonHoriz: 10,
+                                buttonVertical: 7,
+                                press: () {
+                                  //Navigate to view details
+                                },
+                                fontSize: 12,
+                              ),
                             ),
-                          ),
-                          Positioned(
-                            top: 48,
-                            left: 280,
-                            child: LoginButtonTextSize(
-                              size: size,
-                              text: 'Add to cart',
-                              textcolour: Colors.white,
-                              containercolour: Colors.black,
-                              buttonHoriz: 13,
-                              buttonVertical: 7,
-                              press: () {
-                                //Navigate to Add To Cart
-                              },
-                              fontSize: 12,
+                            Positioned(
+                              top: 3,
+                              left: 280,
+                              child: LoginButtonTextSize(
+                                size: size,
+                                text: 'View Details',
+                                textcolour: Color(0xff929292),
+                                containercolour: Color(0xffF0F0F0),
+                                buttonHoriz: 10,
+                                buttonVertical: 7,
+                                press: () {
+                                  //Navigate to view details
+                                },
+                                fontSize: 12,
+                              ),
                             ),
-                          ),
-                        ],
-                      )),
+                            Positioned(
+                              top: 48,
+                              left: 280,
+                              child: LoginButtonTextSize(
+                                size: size,
+                                text: 'Add to cart',
+                                textcolour: Colors.white,
+                                containercolour: Colors.black,
+                                buttonHoriz: 13,
+                                buttonVertical: 7,
+                                press: () {
+                                  //Navigate to Add To Cart
+                                },
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
                 ),
               )
             ],

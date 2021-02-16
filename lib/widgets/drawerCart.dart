@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
 import 'package:flutter_image_pick_crop/modals/product.dart';
+import 'package:provider/provider.dart';
 
 import 'dart:ui';
 import 'package:flutter_image_pick_crop/screens/checkOut.dart';
@@ -50,6 +51,7 @@ class _DrawerCartState extends State<DrawerCart> {
                           icon: Icon(
                             Icons.close,
                             size: 40,
+                            color: Colors.white,
                           ),
                           onPressed: () {
                             Navigator.pop(context);
@@ -58,64 +60,70 @@ class _DrawerCartState extends State<DrawerCart> {
                         Container(
                           height: size.height * 0.74,
                           color: Colors.transparent,
-                          child: ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: cartItems.length,
-                              // itemCount: cartItems.length,
-                              itemBuilder: (context, index) => Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 7.5, bottom: 8),
-                                    child: Stack(
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            Container(
-                                              height: 60,
-                                              width: 80,
-                                              decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      cartItems[index].image),
+                          child: Consumer<MyCart>(
+                            builder: (context, myCart, child) =>
+                                ListView.builder(
+                                    physics: BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: myCart.cartItems.length,
+                                    // itemCount: cartItems.length,
+                                    itemBuilder: (context, index) => Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 7.5, bottom: 8),
+                                          child: Stack(
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.stretch,
+                                                children: [
+                                                  Container(
+                                                    height: 60,
+                                                    width: 80,
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: AssetImage(myCart
+                                                            .cartItems[index]
+                                                            .image),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 18),
+                                                    child: Text(
+                                                        'Rs.${myCart.cartItems[index].price}'),
+                                                  )
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 50),
+                                                child: IconButton(
+                                                  icon: Icon(
+                                                    Icons.remove_circle,
+                                                  ),
+                                                  onPressed: () {
+                                                    myCart.removeAt(index);
+                                                    setState(() {
+                                                      cartItems.removeAt(index);
+                                                      sum = 0;
+                                                      cartItems.forEach((item) {
+                                                        sum = sum + item.price;
+                                                      });
+                                                    });
+                                                  },
                                                 ),
                                               ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 18),
-                                              child: Text(
-                                                  'Rs.${cartItems[index].price}'),
-                                            )
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 50),
-                                          child: IconButton(
-                                            icon: Icon(
-                                              Icons.remove_circle,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                cartItems.removeAt(index);
-                                                sum = 0;
-                                                cartItems.forEach((item) {
-                                                  sum = sum + item.price;
-                                                });
-                                              });
-                                            },
+                                            ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
+                                        )
 
-                              // CartItemDisplayer(
-                              //   index: index,
-                              // ),
-                              ),
+                                    // CartItemDisplayer(
+                                    //   index: index,
+                                    // ),
+                                    ),
+                          ),
                         ),
                       ],
                     ),
@@ -144,14 +152,18 @@ class _DrawerCartState extends State<DrawerCart> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600),
                           ),
-                          Text('${cartItems.length.toString()} items'),
-                          Text(
-                            'Rs.$sum',
-                            style: TextStyle(
-                                color: Color(0xff3C3C3C),
-                                fontFamily: 'Inter',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
+                          Consumer<MyCart>(
+                              builder: (context, myCart, child) => Text(
+                                  '${myCart.cartItems.length.toString()} items')),
+                          Consumer<MyCart>(
+                            builder: (context, myCart, child) => Text(
+                              'Rs.${sum}',
+                              style: TextStyle(
+                                  color: Color(0xff3C3C3C),
+                                  fontFamily: 'Inter',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                           LoginButtonTextSize(
                             size: size,
