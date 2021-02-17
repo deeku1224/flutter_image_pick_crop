@@ -181,103 +181,84 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
                 )),
-                child: Consumer<MyCart>(
-                  builder: (context, myCart, child) => ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: myCart.length(),
-                    itemBuilder: (context, index) => Padding(
-                        padding:
-                            EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                        child: Stack(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 10, bottom: 10),
-                              child: Container(
-                                height: 100,
-                                width: 380,
-                                decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.shade400
-                                            .withOpacity(0.5),
-                                        spreadRadius: 1,
-                                        blurRadius: 12,
-
-                                        offset: Offset(
-                                            5, 5), // changes position of shadow
-                                      ),
-                                    ],
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10)),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
+                child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: cartItems.length,
+                  itemBuilder: (context, index) => Padding(
+                      padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 10, bottom: 10),
+                            child: Container(
                               height: 100,
-                              width: 100,
+                              width: 380,
                               decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.contain,
-                                  image:
-                                      AssetImage(myCart.cartItems[index].image),
-                                ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.grey.shade400.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 12,
+
+                                      offset: Offset(
+                                          5, 5), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 10),
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.contain,
+                                image: AssetImage(cartItems[index].image),
                               ),
                             ),
-                            Positioned(
-                              top: 20,
-                              left: 140,
-                              child: Text(
-                                '${myCart.cartItems[index].name}',
-                                style: TextStyle(
-                                  color: Color(0xff4D4D4D),
-                                  fontFamily: 'OpenSans',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                          ),
+                          Positioned(
+                            top: 20,
+                            left: 140,
+                            child: Text(
+                              '${cartItems[index].name}',
+                              style: TextStyle(
+                                color: Color(0xff4D4D4D),
+                                fontFamily: 'OpenSans',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            Positioned(
-                              top: 5,
-                              left: 280,
-                              child: LoginButtonTextSize(
-                                size: size,
-                                text: 'View Details',
-                                textcolour: Color(0xff929292),
-                                containercolour: Color(0xffF0F0F0),
-                                buttonHoriz: 10,
-                                buttonVertical: 7,
-                                press: () {
-                                  //Navigate to view details
-                                },
-                                fontSize: 12,
-                              ),
+                          ),
+                          Positioned(
+                            top: 3,
+                            left: 280,
+                            child: LoginButtonTextSize(
+                              size: size,
+                              text: 'View Details',
+                              textcolour: Color(0xff929292),
+                              containercolour: Color(0xffF0F0F0),
+                              buttonHoriz: 10,
+                              buttonVertical: 7,
+                              press: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SinglesPage(
+                                            isFav: cartItems[index].isFavourite,
+                                            product: cartItems[index])));
+                                //Navigate to view details
+                              },
+                              fontSize: 12,
                             ),
-                            Positioned(
-                              top: 3,
-                              left: 280,
-                              child: LoginButtonTextSize(
-                                size: size,
-                                text: 'View Details',
-                                textcolour: Color(0xff929292),
-                                containercolour: Color(0xffF0F0F0),
-                                buttonHoriz: 10,
-                                buttonVertical: 7,
-                                press: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SinglesPage(
-                                              isFav:
-                                                  cartItems[index].isFavourite,
-                                              product: cartItems[index])));
-                                  //Navigate to view details
-                                },
-                                fontSize: 12,
-                              ),
-                            ),
-                            Positioned(
+                          ),
+                          Consumer<MyCart>(
+                            builder: (context, myCart, child) => Positioned(
                               top: 48,
                               left: 280,
                               child: LoginButtonTextSize(
@@ -289,7 +270,6 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                                 buttonVertical: 7,
                                 press: () {
                                   myCart.addToCart(cartItems[index]);
-
                                   setState(() {
                                     cartItems.add(cartItems[index]);
                                     cartItems.forEach((item) {
@@ -302,11 +282,11 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                                 fontSize: 12,
                               ),
                             ),
-                          ],
-                        )),
-                  ),
+                          ),
+                        ],
+                      )),
                 ),
-              )
+              ),
             ],
           ),
         ),

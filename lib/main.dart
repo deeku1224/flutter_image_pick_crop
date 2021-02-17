@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.transparent,
             accentColorBrightness: Brightness.light,
           ),
-          initialRoute: HomePage.id,
+          initialRoute: HistorySinglePage.id,
           routes: {
             Splash.id: (context) => Splash(),
             // assests\images\tenor.gif
