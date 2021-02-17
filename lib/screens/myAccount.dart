@@ -134,8 +134,7 @@ class _MyAccountState extends State<MyAccount> {
                               radius: 50,
                               backgroundImage: _pickedImage != null
                                   ? FileImage(_pickedImage)
-                                  : AssetImage(
-                                      'assests/images/Ellipse 368.jpg'),
+                                  : AssetImage('${user[0].image}'),
                             ),
                           ),
                         ),
@@ -245,6 +244,7 @@ class _MyAccountState extends State<MyAccount> {
     if (cropped != null) {
       setState(() {
         _pickedImage = cropped;
+        //user[0].image = _pickedImage;
       });
     }
   }

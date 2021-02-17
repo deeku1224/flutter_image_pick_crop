@@ -1,19 +1,29 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
-import 'package:flutter_image_pick_crop/widgets/drawer.dart';
-import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
 import 'package:flutter_image_pick_crop/modals/searchResult.dart';
 import 'package:flutter_image_pick_crop/screens/singlesPage.dart';
+import 'package:flutter_image_pick_crop/widgets/drawer.dart';
+import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
 import 'package:flutter_image_pick_crop/widgets/searchResult.dart';
+import 'package:flutter_image_pick_crop/widgets/searchAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/notificationAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/cartAligned.dart';
+import 'package:flutter_image_pick_crop/widgets/profileAligned.dart';
 
 class SearchResult extends StatefulWidget {
-  static const String id = 'SearchResult';
+  final product;
+
+  const SearchResult({Key key, this.product}) : super(key: key);
   @override
-  _SearchResultState createState() => _SearchResultState();
+  _SearchResultState createState() => _SearchResultState(product);
 }
 
 class _SearchResultState extends State<SearchResult> {
+  final product;
+  _SearchResultState(this.product);
+
   @override
   Widget build(BuildContext context) {
     double sum = 0;
@@ -35,13 +45,13 @@ class _SearchResultState extends State<SearchResult> {
               children: [
                 Container(
                   margin: EdgeInsets.only(
-                    top: 130,
+                    top: 70,
                   ),
                   padding: EdgeInsets.only(
                     left: 15,
                     right: 15,
                   ),
-                  height: 640,
+                  height: 701,
                   // height: searchResult.length<6?size.height:size.height+(100*()),
 
                   width: size.width,
@@ -49,7 +59,7 @@ class _SearchResultState extends State<SearchResult> {
                   child: GridView.builder(
                     physics: BouncingScrollPhysics(),
                     //physics: NeverScrollableScrollPhysics(),
-                    itemCount: searchResult.length,
+                    itemCount: product.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         childAspectRatio: 0.9,
                         crossAxisCount: 2,
@@ -61,20 +71,19 @@ class _SearchResultState extends State<SearchResult> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SinglesPage(
-                                    isFav: searchResult[index].isFavourite,
-                                    product: searchResult[index])));
+                                    isFav: product[index].isFavourite,
+                                    product: product[index])));
                       },
-                      resultIndex: searchResult[index],
-                      isFav: searchResult[index].isFavourite,
+                      resultIndex: product[index],
+                      isFav: product[index].isFavourite,
                     ),
                   ),
                 ),
                 // ),
               ],
             ),
-
             Container(
-              height: 75,
+              height: 70,
               width: size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -92,59 +101,13 @@ class _SearchResultState extends State<SearchResult> {
               ),
             ),
             //drawer opener person icon
-            Container(
-              margin: EdgeInsets.only(left: 10, top: 0),
-              child: Builder(
-                builder: (BuildContext context) {
-                  return IconButton(
-                    color: Colors.white,
-                    iconSize: 32,
-                    icon: Icon(
-                      Icons.person,
-                    ),
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  );
-                },
-              ),
-            ),
+            ProfileAligned(),
+            //searchIcon
+            SearchAligned(),
             //Notification icon
-            Container(
-              margin: EdgeInsets.only(left: 290, top: 0),
-              child: Builder(
-                builder: (BuildContext context) {
-                  return IconButton(
-                    color: Colors.white,
-                    iconSize: 32,
-                    icon: Icon(
-                      Icons.notifications_active,
-                    ),
-                    onPressed: () {
-                      //Navigate to Notification Page
-                    },
-                  );
-                },
-              ),
-            ),
+            NotificationAligned(),
             //Shopping Cart
-            Container(
-              margin: EdgeInsets.only(left: 345, top: 0),
-              child: Builder(
-                builder: (BuildContext context) {
-                  return IconButton(
-                    color: Colors.white,
-                    iconSize: 32,
-                    icon: Icon(
-                      Icons.shopping_cart,
-                    ),
-                    onPressed: () {
-                      Scaffold.of(context).openEndDrawer();
-                    },
-                  );
-                },
-              ),
-            ),
+            CartAligned(),
           ],
         ),
       ),

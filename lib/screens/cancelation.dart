@@ -1,5 +1,8 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 
 class Cancelation extends StatefulWidget {
@@ -127,7 +130,84 @@ class _CancelationState extends State<Cancelation> {
                   buttonVertical: size.height * 0.02,
                   buttonHoriz: size.width * 0.16,
                   press: () {
-                    //Navigate to cancel Order
+                    showAnimatedDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          contentPadding: EdgeInsets.zero,
+                          backgroundColor: Colors.transparent,
+                          content: Container(
+                            height: 260,
+                            width: 420,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Color(0xffFF0924),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Are You Sure To',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                                Text(
+                                  'Cancel?',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    LoginButtonTextSize(
+                                      size: size,
+                                      text: 'Cancel',
+                                      textcolour: Color(0xffFFFFFF),
+                                      containercolour: Color(0xff000000),
+                                      buttonHoriz: 30,
+                                      buttonVertical: 17,
+                                      press: () {
+                                        Navigator.pop(context);
+                                      },
+                                      fontSize: 17,
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    LoginButtonTextSize(
+                                      size: size,
+                                      text: 'Confirm',
+                                      textcolour: Color(0xffFFFFFF),
+                                      containercolour: Color(0xffFF596C),
+                                      buttonHoriz: 30,
+                                      buttonVertical: 17,
+                                      press: () {
+                                        //go to what to do next
+                                      },
+                                      fontSize: 17,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      animationType: DialogTransitionType.scale,
+                      curve: Curves.fastOutSlowIn,
+                      duration: Duration(seconds: 1),
+                    );
                   },
                 ),
               ),

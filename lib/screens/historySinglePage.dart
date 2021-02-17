@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
+import 'package:flutter_image_pick_crop/screens/singlesPage.dart';
 import 'package:flutter_image_pick_crop/widgets/searchAligned.dart';
 import 'package:flutter_image_pick_crop/widgets/notificationAligned.dart';
 import 'package:flutter_image_pick_crop/widgets/cartAligned.dart';
@@ -11,9 +12,14 @@ import 'package:flutter_image_pick_crop/widgets/drawer.dart';
 import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 
-class HistorySinglePage extends StatelessWidget {
+class HistorySinglePage extends StatefulWidget {
   static const String id = 'HistorySinglePage';
 
+  @override
+  _HistorySinglePageState createState() => _HistorySinglePageState();
+}
+
+class _HistorySinglePageState extends State<HistorySinglePage> {
   @override
   Widget build(BuildContext context) {
     double sum = 0;
@@ -259,6 +265,13 @@ class HistorySinglePage extends StatelessWidget {
                                 buttonHoriz: 10,
                                 buttonVertical: 7,
                                 press: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SinglesPage(
+                                              isFav:
+                                                  cartItems[index].isFavourite,
+                                              product: cartItems[index])));
                                   //Navigate to view details
                                 },
                                 fontSize: 12,
@@ -275,6 +288,15 @@ class HistorySinglePage extends StatelessWidget {
                                 buttonHoriz: 13,
                                 buttonVertical: 7,
                                 press: () {
+                                  myCart.addToCart(cartItems[index]);
+
+                                  setState(() {
+                                    cartItems.add(cartItems[index]);
+                                    cartItems.forEach((item) {
+                                      sum = 0;
+                                      sum = sum + item.price;
+                                    });
+                                  });
                                   //Navigate to Add To Cart
                                 },
                                 fontSize: 12,

@@ -18,7 +18,6 @@ import 'package:flutter_image_pick_crop/screens/bill.dart';
 import 'package:flutter_image_pick_crop/screens/checkOut.dart';
 import 'package:flutter_image_pick_crop/screens/historySinglePage.dart';
 import 'package:flutter_image_pick_crop/screens/myOrderSingleList.dart';
-import 'package:flutter_image_pick_crop/screens/searchResult.dart';
 import 'package:flutter_image_pick_crop/screens/notification.dart';
 import 'package:flutter_image_pick_crop/screens/privacyPolicy.dart';
 import 'package:flutter_image_pick_crop/screens/termsAndConditions.dart';
@@ -69,7 +68,7 @@ class MyApp extends StatelessWidget {
             HistorySinglePage.id: (context) => HistorySinglePage(),
             MyOrderSingleList.id: (context) => MyOrderSingleList(),
             //needs some changes
-            SearchResult.id: (context) => SearchResult(),
+
             Notifications.id: (context) => Notifications(),
             PrivacyPolicy.id: (context) => PrivacyPolicy(),
             TermsAndCondition.id: (context) => TermsAndCondition(),
