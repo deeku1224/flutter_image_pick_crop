@@ -26,4 +26,8 @@ List<Address> address = [
       'Tamil Nadu'),
   Address('Home', '3/260', 'Andi Gounder Colony', 'Nethimedu', 'Salem',
       'Tamil Nadu'),
+  Address('Home', '3/260', 'Andi Gounder Colony', 'Nethimedu', 'Salem',
+      'Tamil Nadu'),
+  Address('Home', '3/260', 'Andi Gounder Colony', 'Nethimedu', 'Salem',
+      'Tamil Nadu'),
 ];

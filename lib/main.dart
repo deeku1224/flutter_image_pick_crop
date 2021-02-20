@@ -16,7 +16,7 @@ import 'package:flutter_image_pick_crop/screens/historyPage.dart';
 import 'package:flutter_image_pick_crop/screens/paymentMethod.dart';
 import 'package:flutter_image_pick_crop/screens/bill.dart';
 import 'package:flutter_image_pick_crop/screens/checkOut.dart';
-import 'package:flutter_image_pick_crop/screens/historySinglePage.dart';
+
 import 'package:flutter_image_pick_crop/screens/myOrderSingleList.dart';
 import 'package:flutter_image_pick_crop/screens/notification.dart';
 import 'package:flutter_image_pick_crop/screens/privacyPolicy.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.transparent,
             accentColorBrightness: Brightness.light,
           ),
-          initialRoute: HistorySinglePage.id,
+          initialRoute: HomePage.id,
           routes: {
             Splash.id: (context) => Splash(),
             // assests\images\tenor.gif
@@ -65,10 +65,8 @@ class MyApp extends StatelessWidget {
             PaymentMethod.id: (context) => PaymentMethod(),
             Bill.id: (context) => Bill(),
             CheckOut.id: (context) => CheckOut(),
-            HistorySinglePage.id: (context) => HistorySinglePage(),
-            MyOrderSingleList.id: (context) => MyOrderSingleList(),
-            //needs some changes
 
+            MyOrderSingleList.id: (context) => MyOrderSingleList(),
             Notifications.id: (context) => Notifications(),
             PrivacyPolicy.id: (context) => PrivacyPolicy(),
             TermsAndCondition.id: (context) => TermsAndCondition(),

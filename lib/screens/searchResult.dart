@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
 import 'package:flutter_image_pick_crop/modals/searchResult.dart';
+import 'package:flutter_image_pick_crop/modals/favourites.dart';
 import 'package:flutter_image_pick_crop/screens/singlesPage.dart';
 import 'package:flutter_image_pick_crop/widgets/drawer.dart';
 import 'package:flutter_image_pick_crop/widgets/drawerCart.dart';
@@ -36,7 +37,9 @@ class _SearchResultState extends State<SearchResult> {
       child: Scaffold(
         backgroundColor: Color(0xfff2f2f2),
         drawerScrimColor: Colors.transparent,
-        drawer: DrawerStart(),
+        drawer: DrawerStart(
+          currentPage: product == favouriteProduct ? 5 : 1,
+        ),
         endDrawer: DrawerCart(size: size, sum: sum),
         body: Stack(
           children: [

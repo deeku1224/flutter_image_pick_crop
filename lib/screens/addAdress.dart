@@ -1,4 +1,8 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_image_pick_crop/modals/address.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 import 'package:flutter_image_pick_crop/screens/selectAddress.dart';
 
@@ -54,6 +58,10 @@ class _AddAdressState extends State<AddAdress> {
     });
   }
 
+  var _formTitleKey = GlobalKey<FormState>();
+  var _formDoorNoKey = GlobalKey<FormState>();
+  var _formStreetKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -103,6 +111,12 @@ class _AddAdressState extends State<AddAdress> {
                         textTop: 137,
                         textLeft: 35,
                         text: 'TITLE',
+                        keyBoardType: TextInputType.name,
+                        formKey: _formTitleKey,
+                        validator: (value) {
+                          if (value.length == 0)
+                            return '⚠ Title must not empty';
+                        },
                         containerLeft: 30,
                         containerTop: 159,
                         containerWidth: 359,
@@ -112,6 +126,12 @@ class _AddAdressState extends State<AddAdress> {
                         textTop: 229,
                         textLeft: 35,
                         text: 'DOOR NO.',
+                        keyBoardType: TextInputType.number,
+                        formKey: _formDoorNoKey,
+                        validator: (value) {
+                          if (value.length > 6)
+                            return '⚠ Enter a Valid Door No';
+                        },
                         containerLeft: 30,
                         containerTop: 251,
                         containerWidth: 140,
@@ -121,6 +141,13 @@ class _AddAdressState extends State<AddAdress> {
                         textTop: 229,
                         textLeft: 205,
                         text: 'STREET',
+                        keyBoardType: TextInputType.name,
+
+                        formKey: _formStreetKey,
+                        validator: (value) {
+                          if (value.length < 4)
+                            return '⚠ Enter a Proper Street name';
+                        },
                         containerLeft: 200, //30
                         containerTop: 251,
                         containerWidth: 189,
@@ -151,7 +178,7 @@ class _AddAdressState extends State<AddAdress> {
                           items: _dropDownMenuItems,
                           onChanged: onChangeDropdownItem,
                           hint: Text(
-                            'Select an Area',
+                            'Peramanur',
                             style: TextStyle(
                                 color: Color(0xff6A6A6A),
                                 fontFamily: 'OpenSans',
@@ -182,7 +209,7 @@ class _AddAdressState extends State<AddAdress> {
                         child: RichText(
                           text: TextSpan(children: [
                             TextSpan(
-                              text: 'Currently available only in ',
+                              text: '*Currently available only in ',
                               style: TextStyle(fontFamily: 'OpenSans'),
                             ),
                             TextSpan(
@@ -216,7 +243,74 @@ class _AddAdressState extends State<AddAdress> {
                           buttonVertical: size.height * 0.015,
                           buttonHoriz: size.width * 0.14,
                           press: () {
-                            Navigator.pushNamed(context, AddressSelector.id);
+                            if (address.length <= 5 &&
+                                _formTitleKey.currentState.validate() &&
+                                _formDoorNoKey.currentState.validate() &&
+                                _formStreetKey.currentState.validate()) {
+                              Navigator.pushNamed(context, AddressSelector.id);
+                            } else if (address.length > 5 &&
+                                selectedArea == null) {
+                              showAnimatedDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    contentPadding: EdgeInsets.zero,
+                                    backgroundColor: Colors.transparent,
+                                    content: Container(
+                                      height: 260,
+                                      width: 420,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Color(0xffFF0924),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'You Cannot Add More',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: 'Inter',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 30),
+                                          ),
+                                          Text(
+                                            'than 5 Address',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: 'Inter',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 30),
+                                          ),
+                                          SizedBox(
+                                            height: 40,
+                                          ),
+                                          LoginButtonTextSize(
+                                            size: size,
+                                            text: 'Ok',
+                                            textcolour: Color(0xffFFFFFF),
+                                            containercolour: Color(0xff000000),
+                                            buttonHoriz: 45,
+                                            buttonVertical: 14,
+                                            press: () {
+                                              Navigator.pop(context);
+                                            },
+                                            fontSize: 17,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                animationType: DialogTransitionType.scale,
+                                curve: Curves.fastOutSlowIn,
+                                duration: Duration(seconds: 1),
+                              );
+                            }
                           },
                         ),
                       ),
@@ -302,6 +396,9 @@ class AddressReciverBar extends StatelessWidget {
     this.containerTop,
     this.hintText,
     this.containerWidth,
+    this.formKey,
+    this.validator,
+    this.keyBoardType,
   }) : super(key: key);
   final double textTop;
   final double textLeft;
@@ -310,6 +407,9 @@ class AddressReciverBar extends StatelessWidget {
   final double containerTop;
   final String hintText;
   final double containerWidth;
+  final formKey;
+  final validator;
+  final TextInputType keyBoardType;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -329,7 +429,7 @@ class AddressReciverBar extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: containerLeft, top: containerTop),
           padding: EdgeInsets.only(
-            bottom: 7,
+            bottom: 0,
             left: 28,
           ),
           height: 46,
@@ -338,23 +438,29 @@ class AddressReciverBar extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: TextField(
-            cursorColor: Colors.black,
-            decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: TextStyle(
-                color: Color(0xff6A6A6A),
-                fontFamily: 'OpenSans',
-                fontSize: 14,
-              ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-              ),
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
+          child: Form(
+            key: formKey,
+            child: TextFormField(
+              validator: validator,
+              keyboardType: keyBoardType,
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                errorStyle: TextStyle(color: Colors.teal),
+                hintText: hintText,
+                hintStyle: TextStyle(
+                  color: Color(0xff6A6A6A),
+                  fontFamily: 'OpenSans',
+                  fontSize: 14,
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
               ),
             ),
           ),

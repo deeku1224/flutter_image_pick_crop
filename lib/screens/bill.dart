@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
 import 'package:flutter_image_pick_crop/screens/paymentMethod.dart';
@@ -14,6 +15,8 @@ class Bill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime.now().add(Duration(minutes: 30));
+
     double sum = 0;
 
     final total = [
@@ -147,7 +150,7 @@ class Bill extends StatelessWidget {
                         top: 235,
                         left: 255,
                         child: Text(
-                          '5:15 pm',
+                          '${DateFormat("h:mma").format(DateTime.now().add(Duration(minutes: 30)))}',
                           style: TextStyle(
                               color: Color(0xff1DA13B),
                               fontFamily: 'Poppins',

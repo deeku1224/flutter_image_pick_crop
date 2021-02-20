@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
+import 'package:flutter_image_pick_crop/modals/historyPageModal.dart';
 import 'package:flutter_image_pick_crop/screens/historySinglePage.dart';
 import 'package:flutter_image_pick_crop/widgets/searchIcon.dart';
 import 'package:flutter_image_pick_crop/widgets/notificationIcon.dart';
@@ -71,13 +72,17 @@ class HistoryPage extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
-                      itemCount: 3,
+                      itemCount: historypm.length,
                       itemBuilder: (context, index) => Padding(
                             padding: EdgeInsets.only(top: 35),
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, HistorySinglePage.id);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HistorySinglePage(
+                                            product:
+                                                historypm[index].products)));
                               },
                               child: Stack(
                                 children: [
@@ -111,7 +116,7 @@ class HistoryPage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.only(left: 25, top: 30),
                                     child: Text(
-                                      '14',
+                                      historypm[index].date,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'SairaStencilOne',
@@ -121,7 +126,7 @@ class HistoryPage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.only(left: 68, top: 43),
                                     child: Text(
-                                      'Dec',
+                                      historypm[index].month,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Inter',
@@ -132,7 +137,7 @@ class HistoryPage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.only(left: 70, top: 60),
                                     child: Text(
-                                      'Sat',
+                                      historypm[index].day,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Inter',
@@ -143,7 +148,7 @@ class HistoryPage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.only(left: 25, top: 85),
                                     child: Text(
-                                      '2020',
+                                      historypm[index].year,
                                       style: TextStyle(
                                           letterSpacing: 12,
                                           color: Colors.white,
@@ -156,9 +161,8 @@ class HistoryPage extends StatelessWidget {
                                     margin: EdgeInsets.only(left: 160, top: 20),
                                     width: 170,
                                     height: 70,
-                                    color: Colors.blue,
                                     child: Text(
-                                      'hello',
+                                      '${historypm[0].products[0].name},${historypm[0].products[1].name}',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Inter',
@@ -170,7 +174,7 @@ class HistoryPage extends StatelessWidget {
                                     padding:
                                         EdgeInsets.only(top: 108, left: 285),
                                     child: Text(
-                                      '7 Items',
+                                      '${historypm[0].products.length} Items',
                                       style: TextStyle(
                                           fontFamily: 'Inter',
                                           fontWeight: FontWeight.w500,

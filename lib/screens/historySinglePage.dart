@@ -14,12 +14,18 @@ import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 
 class HistorySinglePage extends StatefulWidget {
   static const String id = 'HistorySinglePage';
+  final product;
 
+  const HistorySinglePage({Key key, this.product}) : super(key: key);
   @override
-  _HistorySinglePageState createState() => _HistorySinglePageState();
+  _HistorySinglePageState createState() => _HistorySinglePageState(product);
 }
 
 class _HistorySinglePageState extends State<HistorySinglePage> {
+  final product;
+
+  _HistorySinglePageState(this.product);
+
   @override
   Widget build(BuildContext context) {
     double sum = 0;
@@ -185,7 +191,7 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                   physics: BouncingScrollPhysics(),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: cartItems.length,
+                  itemCount: product.length,
                   itemBuilder: (context, index) => Padding(
                       padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
                       child: Stack(
@@ -218,7 +224,7 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.contain,
-                                image: AssetImage(cartItems[index].image),
+                                image: AssetImage(product[index].image),
                               ),
                             ),
                           ),
@@ -226,7 +232,7 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                             top: 20,
                             left: 140,
                             child: Text(
-                              '${cartItems[index].name}',
+                              '${product[index].name}',
                               style: TextStyle(
                                 color: Color(0xff4D4D4D),
                                 fontFamily: 'OpenSans',
@@ -250,8 +256,8 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => SinglesPage(
-                                            isFav: cartItems[index].isFavourite,
-                                            product: cartItems[index])));
+                                            isFav: product[index].isFavourite,
+                                            product: product[index])));
                                 //Navigate to view details
                               },
                               fontSize: 12,
@@ -269,9 +275,9 @@ class _HistorySinglePageState extends State<HistorySinglePage> {
                                 buttonHoriz: 13,
                                 buttonVertical: 7,
                                 press: () {
-                                  myCart.addToCart(cartItems[index]);
+                                  myCart.addToCart(product[index]);
                                   setState(() {
-                                    cartItems.add(cartItems[index]);
+                                    cartItems.add(product[index]);
                                     cartItems.forEach((item) {
                                       sum = 0;
                                       sum = sum + item.price;

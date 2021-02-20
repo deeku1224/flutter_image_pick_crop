@@ -3,8 +3,9 @@ import 'drawerListTile.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:flutter_image_pick_crop/modals/favourites.dart';
 import 'package:flutter_image_pick_crop/modals/user.dart';
+import 'package:flutter_image_pick_crop/screens/searchResult.dart';
 import 'package:flutter_image_pick_crop/screens/MyAccount.dart';
 import 'package:flutter_image_pick_crop/screens/HistoryPage.dart';
 import 'package:flutter_image_pick_crop/screens/home.dart';
@@ -175,7 +176,12 @@ class DrawerStart extends StatelessWidget {
                     fontWeight:
                         currentPage == 5 ? FontWeight.w600 : FontWeight.w200,
                     onPress: () {
-                      //
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SearchResult(
+                                    product: favouriteProduct,
+                                  )));
                     },
                   ),
                 ),
