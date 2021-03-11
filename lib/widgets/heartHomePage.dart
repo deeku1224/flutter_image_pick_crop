@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_pick_crop/modals/homeVegetables.dart';
+import 'package:flutter_image_pick_crop/modals/favourites.dart';
+import 'package:flutter_image_pick_crop/modals/Product.dart';
 
 class HeartHomePage extends StatefulWidget {
   final product;
@@ -14,7 +17,7 @@ class HeartHomePage extends StatefulWidget {
 
 class _HeartHomePageState extends State<HeartHomePage> {
   bool isFav;
-  final product;
+  Product product;
   _HeartHomePageState(this.isFav, this.product);
 
   @override
@@ -23,6 +26,8 @@ class _HeartHomePageState extends State<HeartHomePage> {
         onTap: () {
           setState(() {
             isFav = !isFav;
+            favouriteProduct.add(product);
+            product.isFavourite = !product.isFavourite;
           });
         },
         child: Container(

@@ -17,15 +17,21 @@ import 'package:flutter_image_pick_crop/widgets/addressListView.dart';
 
 //import 'package:path/path.dart';
 class MyAccount extends StatefulWidget {
-  static final String id = 'MyAccount';
+  final String navFrom;
+
+  const MyAccount({Key key, this.navFrom}) : super(key: key);
   @override
-  _MyAccountState createState() => _MyAccountState();
+  _MyAccountState createState() => _MyAccountState(navFrom);
 }
 
 class _MyAccountState extends State<MyAccount> {
   File _pickedImage;
 
   int selectedIndex = 0;
+
+  final String navFrom;
+
+  _MyAccountState(this.navFrom);
   void indexProvider(index) {
     setState(() {
       selectedIndex = index;
@@ -53,167 +59,175 @@ class _MyAccountState extends State<MyAccount> {
     ];
     Size size = MediaQuery.of(context).size;
 
-    return Container(
-      height: size.height,
-      width: size.width,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assests/images/My account.jpg'),
-          fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () async => navFrom == 'icon' ? true : false,
+      child: Container(
+        height: size.height,
+        width: size.width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assests/images/My account.jpg'),
+            fit: BoxFit.fill,
+          ),
         ),
-      ),
-      child: SafeArea(
-          child: Scaffold(
-        backgroundColor: Colors.transparent,
-        drawerScrimColor: Colors.transparent,
-        drawer: DrawerStart(
-          currentPage: 3,
-        ),
-        endDrawer: DrawerCart(size: size, sum: sum),
-        appBar: AppBar(
+        child: SafeArea(
+            child: Scaffold(
           backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          leading: LeadingIcon(),
-          actions: <Widget>[
-            NotificationIcon(),
-            CartIcon(),
-          ],
-        ),
-        body: Stack(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 120),
-              child: Text(
-                'My Profile',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 34),
+          drawerScrimColor: Colors.transparent,
+          drawer: DrawerStart(
+            currentPage: 3,
+          ),
+          endDrawer: DrawerCart(size: size, sum: sum),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            leading: LeadingIcon(),
+            actions: <Widget>[
+              NotificationIcon(),
+              CartIcon(),
+            ],
+          ),
+          body: Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 120),
+                child: Text(
+                  'My Profile',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 34),
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 45, top: 65),
-              height: 250,
-              width: 315,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Color(0xffFF1632),
-              ),
-              child: Stack(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 220, top: 20),
-                    height: 45,
-                    decoration: BoxDecoration(
-                        color: Colors.white, shape: BoxShape.circle),
-                    child: IconButton(
-                      icon: Icon(Icons.camera),
-                      onPressed: () {
-                        _showPickedOptionDialog(context);
-                      },
+              Container(
+                margin: EdgeInsets.only(left: 45, top: 65),
+                height: 250,
+                width: 315,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color(0xffFF1632),
+                ),
+                child: Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 220, top: 20),
+                      height: 45,
+                      decoration: BoxDecoration(
+                          color: Colors.white, shape: BoxShape.circle),
+                      child: IconButton(
+                        icon: Icon(Icons.camera),
+                        onPressed: () {
+                          _showPickedOptionDialog(context);
+                        },
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 100,
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 0),
-                          height: 111,
-                          width: 116.24,
-                          child: CircleAvatar(
-                            radius: 55,
-                            backgroundColor: Colors.white,
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 100,
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 0),
+                            height: 111,
+                            width: 116.24,
                             child: CircleAvatar(
-                              radius: 50,
-                              backgroundImage: _pickedImage != null
-                                  ? FileImage(_pickedImage)
-                                  : AssetImage('${user[0].image}'),
+                              radius: 55,
+                              backgroundColor: Colors.white,
+                              child: CircleAvatar(
+                                radius: 50,
+                                backgroundImage: _pickedImage != null
+                                    ? FileImage(_pickedImage)
+                                    : AssetImage('${user[0].image}'),
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          '${user[0].name}',
-                          style: TextStyle(
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            '${user[0].name}',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'OpenSans',
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '9863646683',
+                            style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'OpenSans',
+                              fontWeight: FontWeight.w500,
                               fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          '9863646683',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'OpenSans',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 280),
+                height: 310,
+                width: 440,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 40),
+                  child: AddressListView(
+                    selectedIndex: selectedIndex,
+                    onPress: (index) {
+                      indexProvider(index);
+                    },
                   ),
-                ],
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 280),
-              height: 310,
-              width: 440,
-              child: Padding(
-                padding: EdgeInsets.only(top: 40),
-                child: AddressListView(
-                  selectedIndex: selectedIndex,
-                  onPress: (index) {
-                    indexProvider(index);
+              Padding(
+                padding: EdgeInsets.only(top: 600, left: 35),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddAdress(
+                                  navFrom: 'myAccount',
+                                )));
                   },
+                  child: Text(
+                    '                                           + Add new address',
+                    style: TextStyle(
+                        color: Color(0xff707070),
+                        fontFamily: 'Poppins',
+                        fontSize: 16),
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 600, left: 35),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, AddAdress.id);
-                },
-                child: Text(
-                  '                                           + Add new address',
-                  style: TextStyle(
-                      color: Color(0xff707070),
-                      fontFamily: 'Poppins',
-                      fontSize: 16),
+              Padding(
+                padding: EdgeInsets.only(top: 645, left: 90),
+                child: LoginButtonTextSize(
+                  size: size,
+                  text: 'Log out',
+                  textcolour: Color(0xff707070),
+                  containercolour: Color(0xffF5F5F5),
+                  buttonHoriz: 80,
+                  buttonVertical: 15,
+                  press: () {
+                    //log out
+                  },
+                  fontSize: 18,
                 ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 645, left: 90),
-              child: LoginButtonTextSize(
-                size: size,
-                text: 'Log out',
-                textcolour: Color(0xff707070),
-                containercolour: Color(0xffF5F5F5),
-                buttonHoriz: 80,
-                buttonVertical: 15,
-                press: () {
-                  //log out
-                },
-                fontSize: 18,
-              ),
-            )
-          ],
-        ),
-      )),
+              )
+            ],
+          ),
+        )),
+      ),
     );
   }
 

@@ -145,7 +145,7 @@ List<Product> searchResult = [
   Product(
       1,
       35,
-      'Capsicum',
+      'agfsdh',
       'assests/images/Rectangle 256.jpg',
       (1 / 2),
       1,

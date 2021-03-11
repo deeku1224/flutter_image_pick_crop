@@ -7,7 +7,7 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
-      seconds: 15,
+      seconds: 5,
       backgroundColor: Color(0xffF2F2F2),
       image: Image.asset('assests/images/tenor.gif'),
       loaderColor: Colors.white,

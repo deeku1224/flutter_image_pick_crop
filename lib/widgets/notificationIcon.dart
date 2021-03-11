@@ -18,7 +18,12 @@ class NotificationIcon extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.pushNamed(context, Notifications.id);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Notifications(
+                          navFrom: 'icon',
+                        )));
           },
         ),
       );

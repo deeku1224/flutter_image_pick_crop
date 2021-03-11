@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_image_pick_crop/modals/address.dart';
-import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 import 'package:flutter_image_pick_crop/screens/selectAddress.dart';
+import 'package:flutter_image_pick_crop/screens/myAccount.dart';
+import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 
 class AddAdress extends StatefulWidget {
-  static const String id = 'AddAdress';
+  final String navFrom;
+
+  const AddAdress({Key key, this.navFrom}) : super(key: key);
   @override
-  _AddAdressState createState() => _AddAdressState();
+  _AddAdressState createState() => _AddAdressState(navFrom);
 }
 
 class Area {
@@ -32,6 +35,10 @@ class _AddAdressState extends State<AddAdress> {
   List<Area> _areas = Area.getAreas();
   List<DropdownMenuItem<Area>> _dropDownMenuItems;
   Area selectedArea;
+
+  final String navFrom;
+
+  _AddAdressState(this.navFrom);
   @override
   void initState() {
     _dropDownMenuItems = buildDropdownMenuItems(_areas);
@@ -247,7 +254,21 @@ class _AddAdressState extends State<AddAdress> {
                                 _formTitleKey.currentState.validate() &&
                                 _formDoorNoKey.currentState.validate() &&
                                 _formStreetKey.currentState.validate()) {
-                              Navigator.pushNamed(context, AddressSelector.id);
+                              if (navFrom == 'checkOut') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddressSelector(
+                                              navFrom: 'checkOut',
+                                            )));
+                              } else if (navFrom == 'myAccount') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MyAccount(
+                                              navFrom: 'drawer',
+                                            )));
+                              }
                             } else if (address.length > 5 &&
                                 selectedArea == null) {
                               showAnimatedDialog(

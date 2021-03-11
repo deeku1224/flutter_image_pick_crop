@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_pick_crop/screens/addAdress.dart';
+import 'package:flutter_image_pick_crop/screens/bill.dart';
+import 'package:flutter_image_pick_crop/screens/myAccount.dart';
 import 'package:flutter_image_pick_crop/widgets/addressListView.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 import 'package:flutter_image_pick_crop/widgets/drawer.dart';
@@ -9,13 +11,19 @@ import 'package:flutter_image_pick_crop/widgets/nuniTextAligned.dart';
 import 'package:flutter_image_pick_crop/widgets/accountAligned.dart';
 
 class AddressSelector extends StatefulWidget {
-  static const String id = 'AddressSlector';
+  final String navFrom;
+
+  const AddressSelector({Key key, this.navFrom}) : super(key: key);
   @override
-  _AddressSelectorState createState() => _AddressSelectorState();
+  _AddressSelectorState createState() => _AddressSelectorState(navFrom);
 }
 
 class _AddressSelectorState extends State<AddressSelector> {
   int selectedIndex = 0;
+
+  final String navFrom;
+
+  _AddressSelectorState(this.navFrom);
   void indexProvider(index) {
     setState(() {
       selectedIndex = index;
@@ -75,7 +83,12 @@ class _AddressSelectorState extends State<AddressSelector> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, AddAdress.id);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddAdress(
+                                      navFrom: 'checkOut',
+                                    )));
                       },
                       child: Text(
                         '                                             + Add new address',
@@ -94,7 +107,15 @@ class _AddressSelectorState extends State<AddressSelector> {
                       textcolour: Colors.white,
                       text: "Proceed",
                       press: () {
-                        //Navigate to Next Page
+                        if (navFrom == 'checkOut') {
+                          Navigator.pushNamed(context, Bill.id);
+                        } else if (navFrom == 'myAccount') {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MyAccount(navFrom: 'drawer')));
+                        }
                       },
                     ),
                   ],
