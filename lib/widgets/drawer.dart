@@ -1,17 +1,16 @@
 import 'dart:ui';
 import 'drawerListTile.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_image_pick_crop/modals/favourites.dart';
 import 'package:flutter_image_pick_crop/modals/user.dart';
 import 'package:flutter_image_pick_crop/screens/searchResult.dart';
-import 'package:flutter_image_pick_crop/screens/MyAccount.dart';
 import 'package:flutter_image_pick_crop/screens/HistoryPage.dart';
+import 'package:flutter_image_pick_crop/screens/myAccount.dart';
+
 import 'package:flutter_image_pick_crop/screens/home.dart';
 import 'package:flutter_image_pick_crop/screens/privacyPolicy.dart';
 import 'package:flutter_image_pick_crop/screens/termsAndConditions.dart';
-
 import 'package:flutter_image_pick_crop/screens/notification.dart';
 import 'package:flutter_image_pick_crop/screens/customerService.dart';
 
@@ -112,7 +111,11 @@ class DrawerStart extends StatelessWidget {
                     padding: EdgeInsets.only(left: 0, bottom: 0),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, MyAccount.id);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    MyAccount(navFrom: 'drawer')));
                       },
                       child: Container(
                         height: 80,
@@ -159,7 +162,12 @@ class DrawerStart extends StatelessWidget {
                     fontWeight:
                         currentPage == 4 ? FontWeight.w600 : FontWeight.w200,
                     onPress: () {
-                      Navigator.pushNamed(context, Notifications.id);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                Notifications(navFrom: 'drawer'),
+                          ));
                     },
                   ),
                 ),
@@ -180,6 +188,7 @@ class DrawerStart extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => SearchResult(
+                                    navFrom: 'drawer',
                                     product: favouriteProduct,
                                   )));
                     },

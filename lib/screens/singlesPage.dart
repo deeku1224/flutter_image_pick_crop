@@ -231,8 +231,8 @@ class _SinglesPageState extends State<SinglesPage> {
                                   onTap: () {
                                     setState(() {
                                       isFav = !isFav;
-                                      // product.isFavourite =
-                                      //     !product.isFavourite;
+                                      product.isFavourite =
+                                          !product.isFavourite;
                                     });
                                   },
                                   child: Container(

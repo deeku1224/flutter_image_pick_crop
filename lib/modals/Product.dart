@@ -13,7 +13,7 @@ class Product {
   final double p1Percent, p2Percent, p3Percent;
 
   final Color bgColor;
-  final bool isFavourite;
+  bool isFavourite;
 
   Product(
     this.id,

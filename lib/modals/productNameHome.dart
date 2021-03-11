@@ -9,10 +9,10 @@ class ProductNameHome {
 }
 
 List<ProductNameHome> productNameHome = [
-  ProductNameHome('Flour', 'assests/images/tenor.gif'),
-  ProductNameHome('Milk', 'assests/images/tenor.gif'),
-  ProductNameHome('Egg', 'assests/images/Ellipse 1654.png'),
-  ProductNameHome('Dry Fruits', 'assests/images/Ellipse 1654.png'),
-  ProductNameHome('Spinach', 'assests/images/Ellipse 1654.png'),
-  ProductNameHome('flour', 'assests/images/Ellipse 1654.png'),
+  ProductNameHome('Flour', 'assests/images/flour-gif.gif'),
+  ProductNameHome('Milk', 'assests/images/milk_giphy.gif'),
+  ProductNameHome('Egg', 'assests/images/egg-gif.webp'),
+  ProductNameHome('Dry Fruits', 'assests/images/dryfruit.webp'),
+  ProductNameHome('Spinach', 'assests/images/spinach.webp'),
+  ProductNameHome('flour', 'assests/images/flour-gif.gif'),
 ];

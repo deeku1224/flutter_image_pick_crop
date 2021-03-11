@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
-import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 
 class Cancelation extends StatefulWidget {
   static const String id = 'cancelation';

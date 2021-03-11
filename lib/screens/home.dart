@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
 import 'package:flutter_image_pick_crop/modals/offerProduct.dart';
 import 'package:flutter_image_pick_crop/modals/homeVegetables.dart';
@@ -49,10 +50,84 @@ class _HomePageState extends State<HomePage> {
 
     // ignore: unused_local_variable
     double vegetableIndex = 0;
+    Future<bool> _onBackPressed() {
+      return showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Are you sure?'),
+            contentPadding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            content: Container(
+              height: 260,
+              width: 420,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Color(0xffFF0924),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Do you want to exit?',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      LoginButtonTextSize(
+                        size: size,
+                        text: 'Yes',
+                        textcolour: Color(0xffFFFFFF),
+                        containercolour: Color(0xffFF596C),
+                        buttonHoriz: 30,
+                        buttonVertical: 17,
+                        press: () {
+                          Navigator.of(context).pop(true);
+                        },
+                        fontSize: 17,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      LoginButtonTextSize(
+                        size: size,
+                        text: 'Cancel',
+                        textcolour: Color(0xffFFFFFF),
+                        containercolour: Color(0xff000000),
+                        buttonHoriz: 30,
+                        buttonVertical: 17,
+                        press: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        fontSize: 17,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+        animationType: DialogTransitionType.scale,
+        curve: Curves.fastOutSlowIn,
+        duration: Duration(seconds: 1),
+      );
+    }
+
     return WillPopScope(
-      onWillPop: () {
-        //dialog need to be added
-      },
+      onWillPop: _onBackPressed,
+      //dialog need to be added
+
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -285,6 +360,7 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SearchResult(
+                                      navFrom: 'home',
                                       product: searchResult,
                                     )));
                       },
@@ -305,6 +381,7 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SearchResult(
+                                      navFrom: 'home',
                                       product: searchResult,
                                     )));
                         //Navigate to show all
@@ -422,8 +499,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       HeartHomePage(
-                                          product:
-                                              vegetables[index].isFavourite,
+                                          product: vegetables[index],
                                           isFav: vegetables[index].isFavourite),
                                       //vegetable name
                                       Positioned(
@@ -497,6 +573,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => SearchResult(
+                                              navFrom: 'home',
                                               product: searchResult,
                                             )));
                                 //Navigate to Show All
@@ -632,8 +709,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       //heart
                                       HeartHomePage(
-                                          product:
-                                              homeNonVeg[index].isFavourite,
+                                          product: homeNonVeg[index],
                                           isFav: homeNonVeg[index].isFavourite),
                                       //vegetable name
                                       Positioned(
@@ -706,6 +782,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => SearchResult(
+                                              navFrom: 'home',
                                               product: searchResult,
                                             )));
                                 //Navigate to Show All
@@ -838,8 +915,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       //Heart
                                       HeartHomePage(
-                                          product:
-                                              homeFruits[index].isFavourite,
+                                          product: homeFruits[index],
                                           isFav: homeFruits[index].isFavourite),
                                       //vegetable name
                                       Positioned(
@@ -911,6 +987,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => SearchResult(
+                                              navFrom: 'home',
                                               product: searchResult,
                                             )));
                                 //Navigate to Show All

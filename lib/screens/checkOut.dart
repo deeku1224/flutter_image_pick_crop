@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_image_pick_crop/modals/Product.dart';
 import 'package:flutter_image_pick_crop/modals/cart.dart';
-import 'package:flutter_image_pick_crop/screens/bill.dart';
+import 'package:flutter_image_pick_crop/modals/address.dart';
+import 'package:flutter_image_pick_crop/screens/addAdress.dart';
+import 'package:flutter_image_pick_crop/screens/selectAddress.dart';
 import 'package:flutter_image_pick_crop/widgets/drawer.dart';
 import 'package:flutter_image_pick_crop/widgets/loginButton.dart';
 import 'package:flutter_image_pick_crop/widgets/profile2Aligned.dart';
@@ -174,7 +176,21 @@ class _CheckOutState extends State<CheckOut> {
                           buttonVertical: size.height * 0.015,
                           buttonHoriz: size.width * 0.14,
                           press: () async {
-                            Navigator.pushNamed(context, Bill.id);
+                            if (address.length == 0) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddAdress(
+                                            navFrom: 'checkOut',
+                                          )));
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddressSelector(
+                                            navFrom: 'checkOut',
+                                          )));
+                            }
                           },
                         ),
                       ),

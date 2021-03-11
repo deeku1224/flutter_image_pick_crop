@@ -14,7 +14,10 @@ class AccountAligned extends StatelessWidget {
       left: 330,
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, MyAccount.id);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MyAccount(navFrom: 'icon')));
         },
         child: CircleAvatar(
           radius: 32,
